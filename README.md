@@ -21,7 +21,7 @@ Ignoring the first run and averaging over a few runs, we oberve the following pe
 | 2^17 | 199 |
 | 2^18 | 331 | 
 | 2^19 | 619 | 
-| 2^20 | 1170 | 
+| 2^20 | 1230 | 
 
 ## Submission Authors
 
