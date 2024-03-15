@@ -10,7 +10,7 @@ Improve the performance of WASM based MSM on the BLS12377G1 curve.
 
 We have tested our solution on a MacBook Pro M2 laptop, with 10 cores.  Our solution uses multiple cores and
 SIMD, as specified by the competition.  We do not use the GPU for acceleration.  Performance seems
-to vary somewhat from run to run, with the first run being the slowest.  The first run has JIT compilation overhead.
+to vary somewhat from run to run, with the first run being the slowest, probably due to JIT compilation overhead.
  
 Ignoring the first run and averaging over a few runs, we oberve the following performance numbers on the MacBook Pro M2
 (10 cores):
@@ -70,21 +70,21 @@ In this section, we give a high level overview of the optimizations we have used
 -  Our implementation was written completely in C and cross compiled to WASM.
 -  We used Pippenger's bucket algorithm, supporting  16-bit windows.
 -  We use parallel algorithms (run across multiple cores) for bucket accumulation, and bucket reduction.
--  We use an batched affine approach to bucket accumulation.  We build the batches on the fly using atomic
-   operations to lock buckets across threads.
+-  We use a batched affine approach to bucket accumulation.  We build the batches on the fly using atomic
+   operations to lock buckets across threads.  In the event that a bucket is locked, we add it to a collision
+   list for processing in the next batch.
 -  We use signed digits and the cube root endomorphism to minimize the number of buckets in the system.
 -  We use also use a batched affine approach to bucket reduction.
 -  We haven't used any libraries (such as pthreads) to distribute work across thread, instead we have rolled our
    own, using atomic counters and a simple barrier mechanism.  
 -  The FF and EC routines have been carefully optimized:
-   - This Twisted Edwards curve uses a 253-bit finite field.  We implement this using a sequence
-     of 8x 48-bit limbs, where each limbs is stored as a 48-bit integer in an double precision
-     FP64 value.   We use FMA hardware to compute low and high products.  The basic approach
-     is described in the paper ["Faster Modular Exponentiation using Double Precision Floating
-     Point Arithmetic on the GPU](http://www.acsel-lab.com/arithmetic/arith25/pdf/17.pdf), 
+   - BLS12377G1 uses a 377-bit finite field.  We implement this using a sequence of 8x 48-bit limbs, where each 
+     limbs is stored as a 48-bit integer in an double precision FP64 value.   We use FMA hardware to compute low 
+     and high products.  The basic approach is described in the paper ["Faster Modular Exponentiation using 
+     Double Precision Floating Point Arithmetic on the GPU](http://www.acsel-lab.com/arithmetic/arith25/pdf/17.pdf), 
      *2018 IEEE 25th Symposium on Computer Arithmetic (ARITH)* by Emmart, Zheng and Weems.
    - We use WASM 128-bit SIMD operations where possible.  In our other submission, for Twisted Edwards, we use
-     SIMD to two curve operations at the same time.  Here we exploit the SIMD instructions to work on a single
+     SIMD to run two curve operations at the same time.  Here we exploit the SIMD instructions to work on a single
      curve operation.   With 20/20 hind sight, using SIMD to do two curve operations in parallel might have been
      a better approach and required less packing and unpacking.
    - We just use the grade-school O(N^2) multiplication algorithm and word-by-word O(N^2) Montgomery

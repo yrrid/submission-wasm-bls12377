@@ -1,7 +1,8 @@
 This codebase is implement in C.  It was developed, debugged and tested using C and x86 SIMD instructions and
-subsequently cross compiled to WASM using clang-17.  Unfortunately, this code is not well documented, as we've
-run low on time.  It might be better to start by looking at the twisted-edwards implementation, there are more
-comments there.  If you have any questions about the code, feel free to write me at nemmart at yrrid.com.
+subsequently cross compiled to WASM using clang-17.  Unfortunately, this code is not as well documented as we'd
+like (since we've run low on time).  It might be better to start by looking at the twisted-edwards implementation, 
+there are more comments there, and go through this implementation.  If you have any questions about the code,
+feel free to write me at nemmart at yrrid.com.
 
 To build and run the development version of MSM use the following commands:
    make x86simd
