@@ -90,6 +90,13 @@ In this section, we give a high level overview of the optimizations we have used
    - We just use the grade-school O(N^2) multiplication algorithm and word-by-word O(N^2) Montgomery
      reduction.
 
+## Fused-Multiply-And-Add Hardware
+
+- Our implementation takes advantage of FP64 Fused-Multiply-and-Add (FMA) instructions that are available on most modern processors
+  (for example, Intel, AMD, 64-bit ARM processors, etc).  It would be possible to build a fall-back path in the code that uses smaller
+  limbs sizes in each FP64 value.  However, none of the machines we tested on required a fall-back solution, so we didn't implement one. 
+  Our best guess though is that a fall-back implementation would be about 10-25% slower than this implementation.
+
 ## Building Binaries from Source
 
 - The wasm binary was built on Ubuntu 22.04 using clang-17.
