@@ -75,7 +75,7 @@ In this section, we give a high level overview of the optimizations we have used
    list for processing in the next batch.
 -  We use signed digits and the cube root endomorphism to minimize the number of buckets in the system.
 -  We use also use a batched affine approach to bucket reduction.
--  We haven't used any libraries (such as pthreads) to distribute work across thread, instead we have rolled our
+-  We haven't used any libraries (such as pthreads) to distribute work across threads, instead we have rolled our
    own, using atomic counters and a simple barrier mechanism.  
 -  The FF and EC routines have been carefully optimized:
    - BLS12377G1 uses a 377-bit finite field.  We implement this using a sequence of 8x 48-bit limbs, where each 
