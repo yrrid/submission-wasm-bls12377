@@ -48,7 +48,7 @@ git clone --branch bls12_377 https://github.com/demox-labs/webgpu-msm
 ### 2) Copy the data
 
 ```bash
-cp -r webgpu-msm/public/test-data submission-wasm-twisted-edwards/public
+cp -r webgpu-msm/public/test-data submission-wasm-bls12377/public
 ```
 
 ### 3) Install dependencies & start server
